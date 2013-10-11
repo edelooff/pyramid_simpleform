@@ -149,7 +149,14 @@ class Form(object):
         """
         Returns any errors for a given field as a list.
         """
-        errors = self.errors.get(field, [])
+        if '.' in field:
+            errors = self.errors
+            for part in fields.split('.'):
+                if not isinstance(subset, dict) or part not in subset:
+                    return []
+                errors = self.errors[part]
+        else:
+            errors = self.errors.get(field, [])
         if isinstance(errors, basestring):
             errors = [errors]
         return errors
