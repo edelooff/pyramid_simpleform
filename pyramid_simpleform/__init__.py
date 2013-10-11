@@ -151,10 +151,10 @@ class Form(object):
         """
         if '.' in field:
             errors = self.errors
-            for part in fields.split('.'):
-                if not isinstance(subset, dict) or part not in subset:
+            for part in field.split('.'):
+                if not isinstance(errors, dict) or part not in errors:
                     return []
-                errors = self.errors[part]
+                errors = errors[part]
         else:
             errors = self.errors.get(field, [])
         if isinstance(errors, basestring):
